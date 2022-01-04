@@ -1,27 +1,18 @@
-import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
-import * as fastifyCors from 'fastify-cors';
+import dotenv from 'dotenv';
 
-import { AppModule } from './app.module';
-import { useContainer } from 'class-validator';
+import app from './app';
 
-async function bootstrap() {
-  process.on('warning', (err) => console.log(err.message, AppModule.name));
+dotenv.config();
 
-  process.on('uncaughtException', (err) => {
-    console.log(err.message, AppModule.name);
-  });
+const bootstrap = async (): Promise<void> => {
+  const { PORT } = process.env;
 
-  const PORT = process.env.PORT ? +process.env.PORT : 3000;
+  app.listen(PORT, () => console.log(`listem on ${PORT}`));
+};
 
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-  );
-  await app.listen(PORT);
-}
+process.on('uncaughtException', (error) => {
+  console.error(error);
+  process.exit(1);
+});
+
 bootstrap();
