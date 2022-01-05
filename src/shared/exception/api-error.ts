@@ -1,4 +1,4 @@
-import { ErrorReponseData } from '../interfaces/ExceptionError.interfaces'
+import { ErrorReponseData } from '../interfaces/exceptionError.interfaces'
 
 export class ApiError extends Error {
   constructor (
