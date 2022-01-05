@@ -1,6 +1,6 @@
 // @/models.ts
-import { prop, getModelForClass } from "@typegoose/typegoose";
-import { BaseModel } from './base.model';
+import { prop, getModelForClass } from '@typegoose/typegoose'
+import { BaseModel } from './base.model'
 
 export class User extends BaseModel {
   @prop({ required: true })
@@ -13,4 +13,4 @@ export class User extends BaseModel {
   public age!: number;
 }
 
-export const UserModel = getModelForClass(User);
+export const UserModel = getModelForClass(User)

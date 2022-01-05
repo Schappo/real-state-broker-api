@@ -1,26 +1,19 @@
-import express, { Request, Response } from 'express';
-import { ObjectId } from 'mongoose';
-import { ApiError } from '../../shared/exception';
-import { User } from '../../shared/models/user.model';
-import { MongoId } from '../../shared/types';
-import { UserService } from './service';
-
-const router = express.Router();
+import { User } from '../../shared/models/user.model'
+import { MongoId } from '../../shared/types'
+import { UserService } from './service'
 
 export class UserController {
-  constructor(
-    private readonly service: UserService = new UserService()
-  ) { }
+  private readonly service: UserService = new UserService()
 
-  async create(user: User): Promise<User> {
+  async create (user: User): Promise<User> {
     return await this.service.create(user)
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll (): Promise<User[]> {
     return await this.service.findAll()
   }
 
-  async findOne(id: MongoId): Promise<User> {
+  async findOne (id: MongoId): Promise<User> {
     return await this.service.findOne(id)
   }
 }
