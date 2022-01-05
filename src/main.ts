@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { mongoose } from '@typegoose/typegoose';
 
 import app from './app';
 
@@ -6,6 +7,10 @@ dotenv.config();
 
 const bootstrap = async (): Promise<void> => {
   const { PORT } = process.env;
+
+  await mongoose.connect(
+    "mongodb://localhost:27017"
+  );
 
   app.listen(PORT, () => console.log(`listem on ${PORT}`));
 };
