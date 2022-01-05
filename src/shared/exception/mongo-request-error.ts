@@ -1,21 +1,19 @@
-import { ErrorReponseData } from '../interfaces/ExceptionError.interfaces';
-import { MongoError } from 'mongodb';
-
+import { ErrorReponseData } from '../interfaces/ExceptionError.interfaces'
 
 export class MongoRequestError extends Error {
-  constructor(
+  constructor (
     readonly message: string = 'Mongo Request Error!',
-    readonly statusCode: number = 400,
+    readonly statusCode: number = 400
   ) {
-    super();
-    this.message = message;
-    this.statusCode = statusCode;
+    super()
+    this.message = message
+    this.statusCode = statusCode
   }
 
-  toResponseError(): ErrorReponseData {
+  toResponseError (): ErrorReponseData {
     return {
       message: this.message,
-      statusCode: this.statusCode,
-    };
+      statusCode: this.statusCode
+    }
   }
 }

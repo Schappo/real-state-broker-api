@@ -1,19 +1,19 @@
-import { ErrorReponseData } from '../interfaces/ExceptionError.interfaces';
+import { ErrorReponseData } from '../interfaces/ExceptionError.interfaces'
 
 export class ApiError extends Error {
-  constructor(
+  constructor (
     readonly message: string = 'Internal Server Error!',
-    readonly statusCode: number = 500,
+    readonly statusCode: number = 500
   ) {
-    super();
-    this.message = message;
-    this.statusCode = statusCode;
+    super()
+    this.message = message
+    this.statusCode = statusCode
   }
 
-  toResponseError(): ErrorReponseData {
+  toResponseError (): ErrorReponseData {
     return {
       message: this.message,
-      statusCode: this.statusCode,
-    };
+      statusCode: this.statusCode
+    }
   }
 }
