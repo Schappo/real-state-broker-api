@@ -1,12 +1,16 @@
 import express, { Express } from 'express';
-
-import authRouter from './modules/authentication/controller';
-import userRouter from './modules/user/controller';
+import bodyParser from 'body-parser'
+import {
+  authRouter,
+  userRouter
+} from './shared/routes';
 
 const app: Express = express();
 
-app.use('/auth', authRouter);
-app.use('/user', userRouter);
+app.use(bodyParser.json());
+
+app.use('/user', userRouter.default);
+app.use('/auth', authRouter.default);
 
 app.use((req, res) => {
   res.status(404).json({

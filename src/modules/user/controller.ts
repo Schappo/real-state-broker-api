@@ -1,29 +1,26 @@
 import express, { Request, Response } from 'express';
+import { ObjectId } from 'mongoose';
 import { ApiError } from '../../shared/exception';
+import { User } from '../../shared/models/user.model';
+import { MongoId } from '../../shared/types';
 import { UserService } from './service';
 
 const router = express.Router();
 
-const userService = new UserService();
+export class UserController {
+  constructor(
+    private readonly service: UserService = new UserService()
+  ) { }
 
-router.get('/add', async (req: Request, resp: Response) => {
-  try {
-    const respies = await userService.create();
-    // throw new ApiError('BAD REQUEST - The query must contain at least one parameter!', 400);
-    return resp.json(respies);
-  } catch (error) {
-    return resp.json(error.toResponseError());
+  async create(user: User): Promise<User> {
+    return await this.service.create(user)
   }
-});
 
-router.get('/', async (req: Request, resp: Response) => {
-  try {
-    const respies = await userService.findAll();
-    // throw new ApiError('BAD REQUEST - The query must contain at least one parameter!', 400);
-    return resp.json(respies);
-  } catch (error) {
-    return resp.json(error.toResponseError());
+  async findAll(): Promise<User[]> {
+    return await this.service.findAll()
   }
-});
 
-export default router;
+  async findOne(id: MongoId): Promise<User> {
+    return await this.service.findOne(id)
+  }
+}
