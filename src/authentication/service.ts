@@ -1,6 +1,6 @@
 import { map } from 'p-iteration';
 import { ApiError } from '../shared/exception';
-import { Recipe } from './interface';
+import { Recipe } from '../shared/interfaces/Authentication.interface';
 
 type ReturnElementType = {
   a: number,

@@ -1,10 +1,10 @@
 import express, { Express } from 'express';
 
-import recipesRouter from './recipes/controller';
+import authRouter from './authentication/controller';
 
 const app: Express = express();
 
-app.use('/recipes', recipesRouter);
+app.use('/auth', authRouter);
 
 app.use((req, res) => {
   res.status(404).json({
