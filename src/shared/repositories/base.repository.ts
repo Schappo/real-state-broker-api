@@ -32,8 +32,12 @@ export abstract class BaseRepository<T extends BaseModel> {
     return this.model.find(query)
   }
 
-  async findOne (id: MongoId): Promise<DocumentType<T>> {
+  async findById (id: MongoId): Promise<DocumentType<T>> {
     return this.model.findById(id)
+  }
+
+  async findOne (query: object): Promise<DocumentType<T>> {
+    return this.model.findOne(query)
   }
 
   async delete (filter = {}): Promise<QueryWithHelpers<T, any>> {

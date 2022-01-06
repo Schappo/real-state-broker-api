@@ -18,7 +18,11 @@ export class UserService {
     return await this.repository.find(query)
   }
 
-  async findOne (id: MongoId): Promise<DocumentType<User>> {
-    return await this.repository.findOne(id)
+  async findById (id: MongoId): Promise<DocumentType<User>> {
+    return await this.repository.findById(id)
+  }
+
+  async findOne (query: object): Promise<DocumentType<User>> {
+    return await this.repository.findOne(query)
   }
 }

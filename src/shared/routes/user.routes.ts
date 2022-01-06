@@ -36,7 +36,7 @@ router.get('/:id', async (req: Request, resp: Response) => {
   try {
     const params = extractParams(req)
 
-    const users = await userController.findOne(params.id)
+    const users = await userController.findById(params.id)
     return resp.json(users)
   } catch (error) {
     return resp.json(error.toResponseError())

@@ -13,7 +13,11 @@ export class UserController {
     return await this.service.findAll()
   }
 
-  async findOne (id: MongoId): Promise<User> {
-    return await this.service.findOne(id)
+  async findById (id: MongoId): Promise<User> {
+    return await this.service.findById(id)
+  }
+
+  async findOne (query: object): Promise<User> {
+    return await this.service.findOne(query)
   }
 }
