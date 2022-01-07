@@ -16,6 +16,7 @@ function extractParams (req: Request) {
 router.post('/', async (req: Request, resp: Response) => {
   try {
     const body = extractBody(req)
+    console.log('body', body)
     const createdUser = await userController.create(body)
     return resp.json(createdUser)
   } catch (error) {
@@ -25,6 +26,7 @@ router.post('/', async (req: Request, resp: Response) => {
 
 router.get('/', async (req: Request, resp: Response) => {
   try {
+    console.log('passou por aqui')
     const users = await userController.findAll()
     return resp.json(users)
   } catch (error) {
@@ -35,7 +37,7 @@ router.get('/', async (req: Request, resp: Response) => {
 router.get('/:id', async (req: Request, resp: Response) => {
   try {
     const params = extractParams(req)
-
+    console.log(params)
     const users = await userController.findById(params.id)
     return resp.json(users)
   } catch (error) {
@@ -45,8 +47,8 @@ router.get('/:id', async (req: Request, resp: Response) => {
 
 router.delete('/:id', async (req: Request, resp: Response) => {
   try {
-    // const params = extractParams(req)
-    const users = await userController.findAll()
+    const { id } = extractParams(req)
+    const users = await userController.delete(id)
     return resp.json(users)
   } catch (error) {
     return resp.json(error.toResponseError())

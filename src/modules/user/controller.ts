@@ -20,4 +20,8 @@ export class UserController {
   async findOne (query: object): Promise<User> {
     return await this.service.findOne(query)
   }
+
+  async delete (id: MongoId): Promise<User> {
+    return await this.service.delete(id)
+  }
 }

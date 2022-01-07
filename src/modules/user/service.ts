@@ -25,4 +25,8 @@ export class UserService {
   async findOne (query: object): Promise<DocumentType<User>> {
     return await this.repository.findOne(query)
   }
+
+  async delete (id: MongoId): Promise<DocumentType<any>> {
+    return await this.repository.delete(id)
+  }
 }

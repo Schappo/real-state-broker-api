@@ -40,9 +40,9 @@ export abstract class BaseRepository<T extends BaseModel> {
     return this.model.findOne(query)
   }
 
-  async delete (filter = {}): Promise<QueryWithHelpers<T, any>> {
+  async delete (id: MongoId): Promise<QueryWithHelpers<T, any>> {
     try {
-      return this.model.findOneAndDelete(filter)
+      return this.model.findOneAndDelete({ id })
     } catch (error) {
       this.throwMongoError(error)
     }

@@ -18,14 +18,14 @@ export class User extends BaseModel {
   @prop({ required: true })
   public name!: string;
 
+  @prop({ required: true })
+  public password: string;
+
   @prop({ required: true, unique: true })
   public username!: string;
 
   @prop({ required: true })
   public age!: number;
-
-  @prop({ required: true })
-  public password: string;
 }
 
 export const UserModel = getModelForClass(User)
