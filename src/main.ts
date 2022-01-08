@@ -1,18 +1,15 @@
-import dotenv from 'dotenv'
-import { mongoose } from '@typegoose/typegoose'
-
 import app from './app'
 
-dotenv.config()
+const { PORT } = process.env
 
 const bootstrap = async (): Promise<void> => {
-  const { PORT, BD_URL } = process.env
+  try {
+    app.listen(
+      PORT, () => console.log(`App linstening on port ${PORT}`)
+    )
+  } catch (error) {
 
-  await mongoose.connect(
-    BD_URL
-  )
-
-  app.listen(PORT, () => console.log(`listem on ${PORT}`))
+  }
 }
 
 process.on('uncaughtException', (error) => {

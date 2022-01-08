@@ -1,6 +1,6 @@
 /* eslint-disable no-return-assign */
 import bcrypt from 'bcrypt'
-import { ApiError } from '../exception'
+import { ApiError } from './exception'
 
 const { SALT_WORK_FACTOR } = process.env
 

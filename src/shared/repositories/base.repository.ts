@@ -25,6 +25,7 @@ export abstract class BaseRepository<T extends BaseModel> {
   }
 
   async findAll (): Promise<DocumentType<T>[]> {
+    console.log('teste model')
     return this.model.find()
   }
 

@@ -1,12 +1,13 @@
 // @/models.ts
-import { prop, getModelForClass, pre } from '@typegoose/typegoose'
+import { prop, getModelForClass, pre, DocumentType } from '@typegoose/typegoose'
+import { Document } from 'mongoose'
+import { generateHash } from '../encrypte.functions'
 import { BaseModel } from './base.model'
-import { generateHash } from '../helpers'
 
 @pre('save', function (next) {
   const currentUser: any = this
 
-  if (!currentUser.isModified('password')) return next()
+  if (!this.isModified('password')) return next()
 
   const hashedPassword = generateHash(currentUser.password)
 

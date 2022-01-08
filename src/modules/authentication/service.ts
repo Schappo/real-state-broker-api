@@ -1,6 +1,6 @@
 import { UserService } from '../user/service'
-import { compareHash } from '../../shared/helpers'
 import { ApiError } from '../../shared/exception'
+import { compareHash } from '../../shared/encrypte.functions'
 
 export class AuthenticationService {
   private readonly userService = new UserService()
