@@ -5,6 +5,7 @@ export interface ErrorResponse {
 }
 
 export interface ErrorReponseData {
+  code?: string;
   message: string;
   statusCode: number;
 }

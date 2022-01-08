@@ -13,7 +13,8 @@ export abstract class BaseRepository<T extends BaseModel> {
   }
 
   private throwMongoError (e: MongoRequestError) {
-    throw new MongoRequestError(e.message, e.statusCode)
+    console.log(e)
+    throw new MongoRequestError(e.message, e.statusCode, e.code)
   }
 
   async create (item: T): Promise<DocumentType<T>> {
@@ -25,8 +26,7 @@ export abstract class BaseRepository<T extends BaseModel> {
   }
 
   async findAll (): Promise<DocumentType<T>[]> {
-    console.log('teste model')
-    return this.model.find()
+    return await this.model.find()
   }
 
   async find (query: object): Promise<DocumentType<T>[]> {
