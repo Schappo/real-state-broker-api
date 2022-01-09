@@ -6,5 +6,5 @@ export * from './exceptionError.interface'
 export interface IRouter {
   method: MethodsEnum;
   path: string;
-  handlerName: string | symbol;
+  methodName: string;
 }

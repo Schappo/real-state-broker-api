@@ -1,6 +1,6 @@
 export enum MetadataKeysEnum {
-  BASE_PATH = 'base_path',
-  ROUTERS = 'routers'
+  PREFIX = 'prefix',
+  ROUTES = 'routes'
 }
 
 export enum MethodsEnum {

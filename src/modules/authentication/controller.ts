@@ -10,21 +10,8 @@ export class AuthenticationController {
   private readonly service: AuthenticationService = new AuthenticationService()
 
   @Post('/login')
-  @Auth()
-  async login(req: Request, resp: Response): Promise<Response> {
-    try {
-      const { username, password }: UserLogin = req.body
-      return resp.json(await this.service.login(username, password))
-    } catch (error) {
-      return resp.json(error)
-    }
+  async login (req: Request): Promise<any> {
+    const { username, password }: UserLogin = req.body
+    return await this.service.login(username, password)
   }
-
-  // async findAll(): Promise<User[]> {
-  //   return await this.service.findAll()
-  // }
-
-  // async findOne(id: MongoId): Promise<User> {
-  //   return await this.service.findOne(id)
-  // }
 }

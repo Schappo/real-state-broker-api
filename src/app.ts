@@ -1,14 +1,16 @@
 import dotenv from 'dotenv'
-import express, { Application, Handler, Router } from 'express'
+import express, { Express, Application } from 'express'
 import { connect } from 'mongoose'
 import { controllers } from './modules/controllers'
+import { RouteDefinition } from './shared/decorators/http-method.decorator'
 import { MetadataKeysEnum } from './shared/enums'
+import { ApiError } from './shared/exception'
 import { IRouter } from './shared/interfaces'
 dotenv.config()
 class App {
-  private readonly _instance: Application;
+  private readonly _instance: Express;
 
-  get instance (): Application {
+  get instance (): Express {
     return this._instance
   }
 
@@ -35,29 +37,22 @@ class App {
   }
 
   private registerRouters () {
-    this._instance.get('/', (req, res) => {
-      res.json({ message: 'Hello World!' })
-    })
-
-    const info: Array<{ api: string, handler: string }> = []
-
     controllers.forEach((ControllerClass) => {
-      const controllersInstance: {[handleName: string]: Handler} = new ControllerClass() as any
+      const controllersInstance = new ControllerClass() as any
 
-      const basePath: string = Reflect.getMetadata(MetadataKeysEnum.BASE_PATH, ControllerClass)
-      const routers: IRouter[] = Reflect.getMetadata(MetadataKeysEnum.ROUTERS, ControllerClass)
+      const prefix: string = Reflect.getMetadata(MetadataKeysEnum.PREFIX, ControllerClass)
+      const routes: Array<RouteDefinition> = Reflect.getMetadata(MetadataKeysEnum.ROUTES, ControllerClass)
 
-      const expressRouter = Router()
-
-      routers.forEach(({ method, path, handlerName }) => {
-        expressRouter[method](path, controllersInstance[String(handlerName)].bind(controllersInstance))
-
-        info.push({
-          api: `${method.toLocaleUpperCase()} ${basePath + path}`,
-          handler: `${ControllerClass.name}.${String(handlerName)}`
+      routes.forEach((route) => {
+        this.instance[route.requestMethod](`${prefix}${route.path}`, async (req: any, res: any): Promise<any> => {
+          try {
+            const response = await controllersInstance[route.methodName](req, res)
+            return res.send(response)
+          } catch (error) {
+            return res.send(new ApiError(error.message, error.statusCode))
+          }
         })
       })
-      this._instance.use(basePath, expressRouter)
     })
   }
 }

@@ -12,14 +12,14 @@ export class AuthenticationService {
   private readonly userService = new UserService()
   private SECRET = process.env.SECRET
 
-  async login(username: string, password: string): Promise<UserLogin> {
+  async login (username: string, password: string): Promise<UserLogin> {
     const user = await this.userService.findOne({ username })
 
-    if (!user) throw new ApiError('User Not Found!', 404)
+    if (!user) throw new ApiError('User Not Found!', 400)
 
     if (!await compareHash(password, user.password)) throw new ApiError('Incorrect Password', 400)
 
-    delete user.password
+    user.password = ''
 
     const token = await jwt.sign({ user }, this.SECRET)
 

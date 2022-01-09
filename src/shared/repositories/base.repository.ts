@@ -13,7 +13,6 @@ export abstract class BaseRepository<T extends BaseModel> {
   }
 
   private throwMongoError (e: MongoRequestError) {
-    console.log(e)
     throw new MongoRequestError(e.message, e.statusCode, e.code)
   }
 
@@ -35,6 +34,10 @@ export abstract class BaseRepository<T extends BaseModel> {
 
   async findById (id: MongoId): Promise<DocumentType<T>> {
     return this.model.findById(id)
+  }
+
+  async update (id: MongoId, obj: T): Promise<any> {
+    return await this.model.updateOne({ _id: id }, obj).exec()
   }
 
   async findOne (query: object): Promise<DocumentType<T>> {

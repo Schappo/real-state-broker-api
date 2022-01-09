@@ -1,10 +1,10 @@
 // @/models.ts
-import { prop, getModelForClass, pre, DocumentType } from '@typegoose/typegoose'
-import { Document } from 'mongoose'
+import { prop, getModelForClass, pre, post } from '@typegoose/typegoose'
 import { generateHash } from '../encrypte.functions'
 import { BaseModel } from './base.model'
 
 @pre('save', function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const currentUser: any = this
 
   if (!this.isModified('password')) return next()
@@ -19,7 +19,7 @@ export class User extends BaseModel {
   @prop({ required: true })
   public name!: string;
 
-  @prop({ required: true })
+  @prop({ required: true, select: false })
   public password: string;
 
   @prop({ required: true, unique: true })
