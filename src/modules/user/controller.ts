@@ -1,13 +1,15 @@
 import { Request, Response } from 'express'
+import Auth from 'src/shared/decorators/authentication.decrator'
 import Controller from '../../shared/decorators/controller.decorator'
-import { Delete, Get, Post } from '../../shared/decorators/handler.decorator'
+import { Delete, Get, Post } from '../../shared/decorators/http-method.decorator'
 import { UserService } from './service'
 @Controller('/user')
 export class UserController {
   private readonly service: UserService = new UserService()
 
   @Post('/')
-  async create (req: Request, resp: Response): Promise<Response> {
+  @Auth()
+  async create(req: Request, resp: Response): Promise<Response> {
     try {
       const user = req.body
       return resp.json(await this.service.create(user))
@@ -17,7 +19,8 @@ export class UserController {
   }
 
   @Get('/')
-  async findAll (req: Request, resp: Response): Promise<Response> {
+  @Auth()
+  async findAll(req: Request, resp: Response): Promise<Response> {
     try {
       return resp.json(await this.service.findAll())
     } catch (error) {
@@ -26,7 +29,8 @@ export class UserController {
   }
 
   @Get('/:id')
-  async findById (req: Request, resp: Response): Promise<Response> {
+  @Auth()
+  async findById(req: Request, resp: Response): Promise<Response> {
     try {
       const { id } = req.params
       return resp.json(await this.service.findById(id))
@@ -36,7 +40,8 @@ export class UserController {
   }
 
   @Post('/find-one')
-  async findOne (req: Request, resp: Response): Promise<Response> {
+  @Auth()
+  async findOne(req: Request, resp: Response): Promise<Response> {
     try {
       const query = req.body
       return resp.json(await this.service.findOne(query))
@@ -46,7 +51,8 @@ export class UserController {
   }
 
   @Delete('/:id')
-  async delete (req: Request, resp: Response): Promise<Response> {
+  @Auth()
+  async delete(req: Request, resp: Response): Promise<Response> {
     try {
       const { id } = req.params
       return resp.json(await this.service.delete(id))
