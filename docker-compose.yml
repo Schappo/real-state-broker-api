@@ -8,3 +8,11 @@ services:
       - '27017:27017'
     volumes:
       - ./data/db:/data/db
+
+  redis:
+    image: "redis:alpine"
+
+    command: redis-server --requirepass my_redis_secret
+
+    ports:
+      - "6379:6379"
