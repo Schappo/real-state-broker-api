@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dotenv from 'dotenv'
 import express, { Express, Application } from 'express'
 import { connect } from 'mongoose'
@@ -49,6 +50,7 @@ class App {
             const response = await controllersInstance[route.methodName](req, res)
             return res.send(response)
           } catch (error) {
+            res.statusCode = error.statusCode || 500
             return res.send(new ApiError(error.message, error.statusCode))
           }
         })

@@ -1,6 +1,5 @@
 import { ReturnModelType, DocumentType } from '@typegoose/typegoose'
 import { AnyParamConstructor } from '@typegoose/typegoose/lib/types'
-import { QueryWithHelpers } from 'mongoose'
 import { MongoRequestError } from '../exception/mongo-request-error'
 import { BaseModel } from '../models/base.model'
 import { MongoId } from '../types'
@@ -37,16 +36,16 @@ export abstract class BaseRepository<T extends BaseModel> {
   }
 
   async update (id: MongoId, obj: T): Promise<any> {
-    return await this.model.updateOne({ _id: id }, obj).exec()
+    return await this.model.updateOne({ _id: id }, obj)
   }
 
   async findOne (query: object): Promise<DocumentType<T>> {
     return this.model.findOne(query)
   }
 
-  async delete (id: MongoId): Promise<QueryWithHelpers<T, any>> {
+  async delete (id: MongoId): Promise<any> {
     try {
-      return this.model.findOneAndDelete({ id })
+      return this.model.findByIdAndDelete(id)
     } catch (error) {
       this.throwMongoError(error)
     }

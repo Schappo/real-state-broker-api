@@ -1,4 +1,5 @@
 import { DocumentType } from '@typegoose/typegoose'
+import { ObjectId } from 'mongoose'
 import { ApiError } from '../../shared/exception'
 import { User, UserModel } from '../../shared/models/user.model'
 import { UserRepository } from '../../shared/repositories/user.repository'
@@ -9,7 +10,7 @@ export class UserService {
 
   async create (user: User): Promise<DocumentType<User>> {
     const createdUser = await this.repository.create(user)
-    await delete createdUser.password
+    createdUser.password = undefined
     return createdUser
   }
 
@@ -29,8 +30,12 @@ export class UserService {
     return await this.repository.findOne(query)
   }
 
-  async delete (id: MongoId): Promise<DocumentType<any>> {
-    return await this.repository.delete(id)
+  async findUserWithPassword (query: object): Promise<DocumentType<User>> {
+    return await this.repository.findOneWithPassword(query)
+  }
+
+  async delete (id: ObjectId): Promise<boolean> {
+    return Boolean(await this.repository.delete(id))
   }
 
   async update (id: MongoId, newUser: User): Promise<DocumentType<any>> {

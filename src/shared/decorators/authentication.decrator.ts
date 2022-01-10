@@ -10,7 +10,7 @@ const Auth = (role = '') => {
     descriptor: PropertyDescriptor
   ) {
     const original = descriptor.value
-    descriptor.value = function (...args: any[]) {
+    descriptor.value = async function (...args: any[]) {
       const { SECRET } = process.env
 
       const request = args[0] as Request
@@ -23,7 +23,12 @@ const Auth = (role = '') => {
 
       authorization = authorization.replace('Bearer ', '')
 
-      if (!jwt.verify(authorization, SECRET)) return response.json(new ApiError('Invalid Token', 403))
+      try {
+        await jwt.verify(authorization, SECRET)
+      } catch (error) {
+        response.statusCode = 403
+        return response.json(new ApiError('Invalid Token', 403))
+      }
 
       return original.apply(this, args)
     }

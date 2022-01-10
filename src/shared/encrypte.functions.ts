@@ -10,9 +10,9 @@ export function generateHash (password: string): string {
   return hash
 }
 
-export function compareHash (reqPass: string, savedPass: string): Promise<boolean> {
+export async function compareHash (reqPass: string, savedPass: string): Promise<boolean> {
   try {
-    return bcrypt.compareSync(reqPass, savedPass)
+    return await bcrypt.compare(reqPass, savedPass)
   } catch (error) {
     throw new ApiError('Password Incorect', 400)
   }

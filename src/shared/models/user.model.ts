@@ -25,7 +25,7 @@ export class User extends BaseModel {
   @prop({ required: true, unique: true })
   public username!: string;
 
-  @prop({ required: true })
+  @prop({ required: false })
   public age!: number;
 }
 
