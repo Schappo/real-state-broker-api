@@ -38,19 +38,13 @@ export class UserService {
     return Boolean(await this.repository.delete(id))
   }
 
-  async update (id: MongoId, newUser: User): Promise<DocumentType<any>> {
+  async update (id: MongoId, newUser: User): Promise<DocumentType<User>> {
     const user: User = await this.repository.findById(id)
 
     if (!user) throw new ApiError('Uer Not Found', 404)
 
-    user.name = newUser.name
-    user.username = newUser.username
-    user.age = newUser.age
-
-    console.log(user)
-
     await delete user.password
 
-    return await this.repository.update(id, user)
+    return await this.repository.update(id, newUser)
   }
 }

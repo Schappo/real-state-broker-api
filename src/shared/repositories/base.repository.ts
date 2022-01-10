@@ -35,8 +35,8 @@ export abstract class BaseRepository<T extends BaseModel> {
     return this.model.findById(id)
   }
 
-  async update (id: MongoId, obj: T): Promise<any> {
-    return await this.model.updateOne({ _id: id }, obj)
+  async update (id: MongoId, obj: T): Promise<DocumentType<T>> {
+    return await this.model.findByIdAndUpdate(id, obj, { new: true })
   }
 
   async findOne (query: object): Promise<DocumentType<T>> {
