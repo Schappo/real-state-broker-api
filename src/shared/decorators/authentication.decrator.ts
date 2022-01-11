@@ -2,32 +2,39 @@
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { ApiError } from '../exception'
+import { RedisService } from '../redis/redis.service'
 
-const Auth = (role = '') => {
+const Auth = () => {
   return function (
     target: object,
     propertyKey: string | symbol,
     descriptor: PropertyDescriptor
   ) {
     const original = descriptor.value
-    descriptor.value = async function (...args: any[]) {
+    descriptor.value = async function (...args: Express.Application[]) {
+      const redisService = new RedisService()
       const { SECRET } = process.env
 
       const request = args[0] as Request
 
       const response = args[1] as Response
 
-      let { authorization } = request.headers
+      const { authorization } = request.headers
 
-      if (!authorization) return response.json(new ApiError('Token is not provided!', 400))
+      if (!authorization) {
+        response.statusCode = 400
+        throw new ApiError('Token is not provided!', 400)
+      }
 
-      authorization = authorization.replace('Bearer ', '')
+      const accessToken = authorization.replace('Bearer ', '')
 
       try {
-        await jwt.verify(authorization, SECRET)
+        const payload = await jwt.verify(accessToken, SECRET)
+        const token = await redisService.getToken(payload.id)
+        if (token) throw new Error('invalid')
       } catch (error) {
         response.statusCode = 403
-        return response.json(new ApiError('Invalid Token', 403))
+        return new ApiError('Invalid Token', 403)
       }
 
       return original.apply(this, args)

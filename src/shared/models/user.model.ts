@@ -1,6 +1,6 @@
 // @/models.ts
 import { prop, getModelForClass, pre, post } from '@typegoose/typegoose'
-import { generateHash } from '../encrypte.functions'
+import { generateHash } from '../encryption.functions'
 import { BaseModel } from './base.model'
 
 @pre('save', function (next) {

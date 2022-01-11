@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import dotenv from 'dotenv'
-import express, { Express, Application } from 'express'
+import express, { Express, Request, Response } from 'express'
 import { connect } from 'mongoose'
 import { controllers } from './modules/controllers'
 import { RouteDefinition } from './shared/decorators/http-method.decorator'
 import { MetadataKeysEnum } from './shared/enums'
 import { ApiError } from './shared/exception'
-import { IRouter } from './shared/interfaces'
+
 dotenv.config()
 class App {
   private readonly _instance: Express;
@@ -19,7 +19,6 @@ class App {
     this._instance = express()
     this.databaseStart()
     this._instance.use(express.json())
-    // this._instance.use(this.enableCORS)
     this.registerRouters()
   }
 
@@ -45,15 +44,17 @@ class App {
       const routes: Array<RouteDefinition> = Reflect.getMetadata(MetadataKeysEnum.ROUTES, ControllerClass)
 
       routes.forEach((route) => {
-        this.instance[route.requestMethod](`${prefix}${route.path}`, async (req: any, res: any): Promise<any> => {
-          try {
-            const response = await controllersInstance[route.methodName](req, res)
-            return res.send(response)
-          } catch (error) {
-            res.statusCode = error.statusCode || 500
-            return res.send(new ApiError(error.message, error.statusCode))
-          }
-        })
+        this.instance[route.requestMethod](
+          `${prefix}${route.path}`,
+          async (req: Request, res: Response): Promise<Response> => {
+            try {
+              const response = await controllersInstance[route.methodName](req, res)
+              return res.send(response)
+            } catch (error) {
+              res.statusCode = error.statusCode || 500
+              return res.send(new ApiError(error.message, error.statusCode))
+            }
+          })
       })
     })
   }

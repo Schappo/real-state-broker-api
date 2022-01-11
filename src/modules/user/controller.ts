@@ -3,6 +3,7 @@ import Auth from 'src/shared/decorators/authentication.decrator'
 import Controller from '../../shared/decorators/controller.decorator'
 import { Delete, Get, Post, Put } from '../../shared/decorators/http-method.decorator'
 import { User } from '../../shared/models/user.model'
+
 import { UserService } from './service'
 @Controller('/user')
 export class UserController {
@@ -37,14 +38,14 @@ export class UserController {
 
   @Delete('/:id')
   @Auth()
-  async delete (req: Request): Promise<User> {
+  async delete (req: Request): Promise<boolean> {
     const { id } = req.params
     return await this.service.delete(id)
   }
 
   @Put('/:id')
   @Auth()
-  async update (req: Request): Promise<any> {
+  async update (req: Request): Promise<User> {
     const { id } = req.params
     const user = req.body
     return await this.service.update(id, user)
