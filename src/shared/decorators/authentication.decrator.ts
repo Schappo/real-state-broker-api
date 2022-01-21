@@ -29,7 +29,7 @@ const Auth = () => {
       const accessToken = authorization.replace('Bearer ', '')
 
       try {
-        const payload = await jwt.verify(accessToken, SECRET)
+        await jwt.verify(accessToken, SECRET)
         const token = await redisService.getToken(accessToken)
         if (token) throw new Error('invalid')
       } catch (error) {
