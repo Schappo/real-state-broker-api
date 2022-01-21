@@ -1,5 +1,4 @@
-import { Request, Response } from 'express'
-import Auth from 'src/shared/decorators/authentication.decrator'
+import { Request } from 'express'
 import { UserLogin } from 'src/shared/types'
 import Controller from '../../shared/decorators/controller.decorator'
 import { Post } from '../../shared/decorators/http-method.decorator'

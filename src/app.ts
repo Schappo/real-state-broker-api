@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import dotenv from 'dotenv'
 import express, { Express, Request, Response } from 'express'
 import { connect } from 'mongoose'
 import { controllers } from './modules/controllers'
@@ -7,7 +6,6 @@ import { RouteDefinition } from './shared/decorators/http-method.decorator'
 import { MetadataKeysEnum } from './shared/enums'
 import { ApiError } from './shared/exception'
 
-dotenv.config()
 class App {
   private readonly _instance: Express;
 

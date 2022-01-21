@@ -14,7 +14,7 @@ export class AuthenticationService {
   private readonly SECRET = process.env.SECRET
 
   async login (username: string, password: string): Promise<UserLogin> {
-    const user = await this.userService.findUserWithPassword({ username })
+    const user = await this.userService.findUserByPassword({ username })
 
     if (!user) throw new ApiError('User Not Found!', 400)
 
@@ -22,7 +22,7 @@ export class AuthenticationService {
 
     const payload = {
       id: user.id,
-      exp: Math.floor(Date.now() / 1000) + (60 * 60)
+      exp: Math.floor(Date.now() / 1000) + (60)
     }
 
     return {
