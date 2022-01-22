@@ -4,6 +4,7 @@ export interface Recipe {
   link: string;
   gif: string;
 }
+
 export interface SearchedRecipes {
   keywords: string[],
   recipes: Recipe[],

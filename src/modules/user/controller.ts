@@ -5,6 +5,7 @@ import { Delete, Get, Post, Put } from '../../shared/decorators/http-method.deco
 import { User } from '../../shared/models/user.model'
 
 import { UserService } from './service'
+
 @Controller('/user')
 export class UserController {
   private readonly service: UserService = new UserService()

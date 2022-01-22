@@ -10,7 +10,7 @@ export class UserRepository extends BaseRepository<User> {
     super(model)
   }
 
-  async findOneByPassword (query: object): Promise<DocumentType<User>> {
+  async findOneWithoutPassword (query: object): Promise<DocumentType<User>> {
     return this.model.findOne(query).select('+password')
   }
 }

@@ -30,7 +30,7 @@ export class UserService {
   }
 
   async findUserByPassword (query: object): Promise<DocumentType<User>> {
-    return await this.repository.findOneByPassword(query)
+    return await this.repository.findOneWithoutPassword(query)
   }
 
   async delete (id: MongoId): Promise<boolean> {
