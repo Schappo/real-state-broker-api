@@ -14,7 +14,7 @@ export class AuthenticationService {
   private readonly SECRET = process.env.SECRET
 
   async login (username: string, password: string): Promise<UserLogin> {
-    const user = await this.userService.findUserByPassword({ username })
+    const user = await this.userService.findOne({ username })
 
     if (!user) throw new ApiError('User Not Found!', 400)
 

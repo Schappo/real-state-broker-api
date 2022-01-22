@@ -1,7 +1,9 @@
+import { ApartmentController } from './apartment/controller'
 import { AuthenticationController } from './authentication/controller'
 import { UserController } from './user/controller'
 
 export const controllers = [
   UserController,
-  AuthenticationController
+  AuthenticationController,
+  ApartmentController
 ]

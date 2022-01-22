@@ -29,10 +29,6 @@ export class UserService {
     return await this.repository.findOne(query)
   }
 
-  async findUserByPassword (query: object): Promise<DocumentType<User>> {
-    return await this.repository.findOneWithoutPassword(query)
-  }
-
   async delete (id: MongoId): Promise<boolean> {
     return Boolean(await this.repository.delete(id))
   }
