@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import express, { Express, Request, Response } from 'express'
+import express, { Application, Express, Request, Response } from 'express'
 import { connect } from 'mongoose'
 import { controllers } from './modules/controllers'
 import { RouteDefinition } from './shared/decorators/http-method.decorator'
@@ -9,7 +9,7 @@ import { ApiError } from './shared/exception'
 class App {
   private readonly _instance: Express;
 
-  get instance (): Express {
+  get instance (): Express.Application {
     return this._instance
   }
 
