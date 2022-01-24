@@ -9,7 +9,7 @@ import { ApiError } from './shared/exception'
 class App {
   private readonly _instance: Express;
 
-  get instance (): Express.Application {
+  get instance (): Express {
     return this._instance
   }
 
@@ -44,7 +44,7 @@ class App {
       routes.forEach((route) => {
         this.instance[route.requestMethod](
           `${prefix}${route.path}`,
-          async (req: Request, res: Response): Promise<Response> => {
+          (async (req: Request, res: Response): Promise<Response> => {
             try {
               const response = await controllersInstance[route.methodName](req, res)
               return res.send(response)
@@ -52,7 +52,7 @@ class App {
               res.statusCode = error.statusCode || 500
               return res.send(new ApiError(error.message, error.statusCode))
             }
-          })
+          }) as Application)
       })
     })
   }
