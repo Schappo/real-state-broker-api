@@ -1,4 +1,5 @@
-import { MetadataKeysEnum, MethodsEnum } from '../enums'
+import { MetadataKeysEnum, MethodsEnum } from '../../enums'
+import { handlerArgDecorators } from './request-properties.decorator'
 export interface RouteDefinition {
   // Path to our route
   path: string;
@@ -11,8 +12,9 @@ export interface RouteDefinition {
 const methodDecoratorFactory = (method: MethodsEnum) => {
   return (path = '/'): MethodDecorator => {
     return (
-      target: object,
-      propertyKey: string
+      target: object | any,
+      propertyKey: string,
+      descriptor: PropertyDescriptor
     ) => {
       const controllerClass = target.constructor
       if (!Reflect.hasMetadata(MetadataKeysEnum.ROUTES, controllerClass)) {
@@ -26,6 +28,8 @@ const methodDecoratorFactory = (method: MethodsEnum) => {
         methodName: propertyKey
       })
       Reflect.defineMetadata(MetadataKeysEnum.ROUTES, routes, controllerClass)
+
+      handlerArgDecorators(target, propertyKey, descriptor)
     }
   }
 }

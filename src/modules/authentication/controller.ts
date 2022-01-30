@@ -1,8 +1,9 @@
 import { Request } from 'express'
 import { UserLogin } from 'src/shared/types'
-import Controller from '../../shared/decorators/controller.decorator'
-import { Post } from '../../shared/decorators/http-method.decorator'
-import { getAccessTokenFromRequest } from '../../shared/encryption.functions'
+import Auth from '../../shared/decorators/authentication.decrator'
+import Controller from '../../shared/decorators/http/controller.decorator'
+import { Post } from '../../shared/decorators/http/http-method.decorator'
+import { Body, Headers } from '../../shared/decorators/http/request-properties.decorator'
 import { AuthenticationService } from './service'
 
 @Controller('/auth')
@@ -10,14 +11,15 @@ export class AuthenticationController {
   private readonly service: AuthenticationService = new AuthenticationService()
 
   @Post('/login')
-  async login (req: Request): Promise<{ accessToken: string }> {
-    const { username, password }: UserLogin = req.body
+  async login (@Body() userlogin: UserLogin): Promise<{ accessToken: string }> {
+    const { username, password } = userlogin
     return await this.service.login(username, password)
   }
 
   @Post('/logout')
-  async logout (req: Request): Promise<string> {
-    const accessToken = getAccessTokenFromRequest(req)
+  @Auth()
+  async logout (@Headers('authorization') accessToken: string): Promise<string> {
+    console.log(accessToken)
     return await this.service.logout(accessToken)
   }
 }

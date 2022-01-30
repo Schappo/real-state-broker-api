@@ -22,7 +22,7 @@ export class AuthenticationService {
 
     const payload = {
       id: user.id,
-      exp: Math.floor(Date.now() / 1000) + (60)
+      exp: Math.floor(Date.now() / 1000) + (60 * 60)
     }
 
     return {
@@ -30,7 +30,8 @@ export class AuthenticationService {
     }
   }
 
-  async logout (accessToken: string): Promise<string> {
+  async logout (authorization: string): Promise<string> {
+    const accessToken = authorization.replace('Bearer ', '')
     const payload = jwt.verify(accessToken, this.SECRET)
     return await this.redisService.setToken(payload.id, accessToken, payload.exp)
   }

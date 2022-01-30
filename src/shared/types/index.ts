@@ -10,3 +10,9 @@ export type UserLogin = {
   username: string,
   password: string
 }
+
+export type ArgumentsParamDecoratorType = {
+  parameterIndex: number,
+  decoratorName: string,
+  paramName: string
+}

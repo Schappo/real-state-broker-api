@@ -1,6 +1,6 @@
 import { Request } from 'express'
-import Controller from '../../shared/decorators/controller.decorator'
-import { Delete, Get, Post, Put } from '../../shared/decorators/http-method.decorator'
+import Controller from '../../shared/decorators/http/controller.decorator'
+import { Delete, Get, Post, Put } from '../../shared/decorators/http/http-method.decorator'
 import { ApartmentService } from './service'
 
 @Controller('/apartment')

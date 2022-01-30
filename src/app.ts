@@ -2,7 +2,7 @@
 import express, { Application, Express, Request, Response } from 'express'
 import { connect } from 'mongoose'
 import { controllers } from './modules/controllers'
-import { RouteDefinition } from './shared/decorators/http-method.decorator'
+import { RouteDefinition } from './shared/decorators/http/http-method.decorator'
 import { MetadataKeysEnum } from './shared/enums'
 import { ApiError } from './shared/exception'
 

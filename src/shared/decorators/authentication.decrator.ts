@@ -15,9 +15,9 @@ const Auth = () => {
       const redisService = new RedisService()
       const { SECRET } = process.env
 
-      const request = args[0] as Request
+      const request = args[args.length - 2] as Request
 
-      const response = args[1] as Response
+      const response = args[args.length - 1] as Response
 
       const { authorization } = request.headers
 

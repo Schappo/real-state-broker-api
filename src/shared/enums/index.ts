@@ -1,6 +1,7 @@
 export enum MetadataKeysEnum {
   PREFIX = 'prefix',
-  ROUTES = 'routes'
+  ROUTES = 'routes',
+  PARAMS = 'params'
 }
 
 export enum MethodsEnum {

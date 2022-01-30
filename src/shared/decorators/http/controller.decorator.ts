@@ -1,4 +1,4 @@
-import { MetadataKeysEnum } from '../enums'
+import { MetadataKeysEnum } from '../../enums'
 
 const Controller = (prefix = ''): ClassDecorator => {
   return (target) => {
