@@ -10,41 +10,41 @@ import { UserService } from './service'
 
 @Controller('/user')
 export class UserController {
-  private readonly service: UserService = new UserService()
+  private readonly userService: UserService = new UserService()
 
   @Post('/')
   @Auth()
   async create (@Body() user: User): Promise<User> {
-    return await this.service.create(user)
+    return await this.userService.create(user)
   }
 
   @Get('/')
   @Auth()
   async findAll (): Promise<User[]> {
-    return await this.service.findAll()
+    return await this.userService.findAll()
   }
 
   @Get('/:id')
   @Auth()
   async findById (@Params('id') id: MongoId): Promise<User> {
-    return await this.service.findById(id)
+    return await this.userService.findById(id)
   }
 
   @Post('/find-one')
   @Auth()
   async findOne (@Query() query: object): Promise<User> {
-    return await this.service.findOne(query)
+    return await this.userService.findOne(query)
   }
 
   @Delete('/:id')
   @Auth()
   async delete (@Params('id') id: MongoId): Promise<boolean> {
-    return await this.service.delete(id)
+    return await this.userService.delete(id)
   }
 
   @Put('/:id')
   @Auth()
   async update (@Params('id') id: MongoId, @Body() user: User): Promise<User> {
-    return await this.service.update(id, user)
+    return await this.userService.update(id, user)
   }
 }

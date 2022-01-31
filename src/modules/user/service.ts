@@ -5,41 +5,39 @@ import { UserRepository } from '../../shared/repositories/user.repository'
 import { MongoId } from '../../shared/types'
 
 export class UserService {
-  private readonly repository: UserRepository = new UserRepository(UserModel)
+  private readonly userRepository: UserRepository = new UserRepository(UserModel)
 
-  async create (user: User): Promise<DocumentType<User>> {
-    const createdUser = await this.repository.create(user)
-    createdUser.password = undefined
-    return createdUser
+  async create (user: User): Promise<User> {
+    return await this.userRepository.create(user)
   }
 
-  async findAll (): Promise<DocumentType<User>[]> {
-    return await this.repository.findAll()
+  async findAll (): Promise<User[]> {
+    return await this.userRepository.findAll()
   }
 
-  async find (query: object): Promise<DocumentType<User>[]> {
-    return await this.repository.find(query)
+  async find (query: object): Promise<User[]> {
+    return await this.userRepository.find(query)
   }
 
-  async findById (id: MongoId): Promise<DocumentType<User>> {
-    return await this.repository.findById(id)
+  async findById (id: MongoId): Promise<User> {
+    const user: User = await this.userRepository.findById(id)
+
+    if (!user) throw new ApiError('User Not Found', 404)
+
+    return user
   }
 
-  async findOne (query: object): Promise<DocumentType<User>> {
-    return await this.repository.findOne(query)
+  async findOne (query: object): Promise<User> {
+    return await this.userRepository.findOne(query)
   }
 
   async delete (id: MongoId): Promise<boolean> {
-    return Boolean(await this.repository.delete(id))
+    await this.findById(id)
+    return Boolean(await this.userRepository.delete(id))
   }
 
-  async update (id: MongoId, newUser: User): Promise<DocumentType<User>> {
-    const user: User = await this.repository.findById(id)
-
-    if (!user) throw new ApiError('Uer Not Found', 404)
-
-    newUser.password = undefined
-
-    return await this.repository.update(id, newUser)
+  async update (id: MongoId, updatedUser: User): Promise<User> {
+    await this.findById(id)
+    return await this.userRepository.update(id, updatedUser)
   }
 }

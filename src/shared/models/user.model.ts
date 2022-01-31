@@ -1,5 +1,5 @@
 // @/models.ts
-import { prop, getModelForClass, pre, post } from '@typegoose/typegoose'
+import { prop, getModelForClass, pre } from '@typegoose/typegoose'
 import { generateHash } from '../encryption.functions'
 import { BaseModel } from './base.model'
 

@@ -49,6 +49,7 @@ class App {
               const response = await controllersInstance[route.methodName](req, res)
               return res.send(response)
             } catch (error) {
+              console.log(error)
               res.statusCode = error.statusCode || 500
               return res.send(new ApiError(error.message, error.statusCode))
             }

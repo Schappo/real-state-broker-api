@@ -8,35 +8,35 @@ import { ApartmentService } from './service'
 
 @Controller('/apartment')
 export class ApartmentController {
-  private readonly service = new ApartmentService()
+  private readonly apartmentService = new ApartmentService()
 
   @Post('/')
   @Auth()
-  async create (@Body() apartment: Apartment): Promise<any> {
-    return await this.service.create(apartment)
+  async create (@Body() apartment: Apartment): Promise<Apartment> {
+    return await this.apartmentService.create(apartment)
   }
 
   @Get('/')
   @Auth()
-  async findAll (): Promise<any> {
-    return await this.service.findAll()
+  async findAll (): Promise<Apartment[]> {
+    return await this.apartmentService.findAll()
   }
 
   @Get('/:id')
   @Auth()
-  async findById (@Params('id') id: MongoId): Promise<any> {
-    return await this.service.findById(id)
+  async findById (@Params('id') id: MongoId): Promise<Apartment> {
+    return await this.apartmentService.findById(id)
   }
 
   @Put('/:id')
   @Auth()
-  async update (@Params('id') id: MongoId, @Body() apartment: Apartment): Promise<any> {
-    return await this.service.update(id, apartment)
+  async update (@Params('id') id: MongoId, @Body() apartment: Apartment): Promise<Apartment> {
+    return await this.apartmentService.update(id, apartment)
   }
 
   @Delete('/:id')
   @Auth()
   async delete (@Params('id') id: MongoId): Promise<boolean> {
-    return await this.service.delete(id)
+    return await this.apartmentService.delete(id)
   }
 }

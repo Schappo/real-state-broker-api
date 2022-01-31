@@ -6,7 +6,7 @@ import { ApiError } from './exception'
 const { SALT_WORK_FACTOR } = process.env
 
 export function generateHash (password: string): string {
-  const salt = bcrypt.genSaltSync(SALT_WORK_FACTOR)
+  const salt = bcrypt.genSaltSync(parseInt(SALT_WORK_FACTOR))
   const hash = bcrypt.hashSync(password, salt)
   return hash
 }
