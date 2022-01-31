@@ -20,7 +20,6 @@ const methodDecoratorFactory = (method: MethodsEnum) => {
       if (!Reflect.hasMetadata(MetadataKeysEnum.ROUTES, controllerClass)) {
         Reflect.defineMetadata('routes', [], target.constructor)
       }
-
       const routes = Reflect.getMetadata('routes', target.constructor) as Array<RouteDefinition>
       routes.push({
         requestMethod: method,
@@ -28,7 +27,6 @@ const methodDecoratorFactory = (method: MethodsEnum) => {
         methodName: propertyKey
       })
       Reflect.defineMetadata(MetadataKeysEnum.ROUTES, routes, controllerClass)
-
       handleArgDecorators(target, propertyKey, descriptor)
     }
   }
