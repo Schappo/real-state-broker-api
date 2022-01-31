@@ -1,4 +1,4 @@
-import { ApartmentController } from './apartment/controller'
+import { ApartmentController } from './apartment/apartment.controller'
 import { AuthenticationController } from './authentication/controller'
 import { UserController } from './user/user.controller'
 
