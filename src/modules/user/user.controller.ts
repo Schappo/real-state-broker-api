@@ -6,7 +6,7 @@ import { Body, Params, Query } from '../../shared/decorators/http/request-proper
 import { User } from '../../shared/models/user.model'
 import { MongoId } from '../../shared/types'
 
-import { UserService } from './service'
+import { UserService } from './user.service'
 
 @Controller('/user')
 export class UserController {
