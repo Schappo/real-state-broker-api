@@ -4,7 +4,7 @@ import { Delete, Get, Post, Put } from '../../shared/decorators/http/http-method
 import { Body, Params } from '../../shared/decorators/http/request-properties.decorator'
 import { Apartment } from '../../shared/models'
 import { MongoId } from '../../shared/types'
-import { ApartmentService } from './service'
+import { ApartmentService } from './apartment.service'
 
 @Controller('/apartment')
 export class ApartmentController {
