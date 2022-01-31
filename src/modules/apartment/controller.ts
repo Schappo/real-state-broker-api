@@ -1,6 +1,9 @@
-import { Request } from 'express'
+import Auth from '../../shared/decorators/authentication.decrator'
 import Controller from '../../shared/decorators/http/controller.decorator'
 import { Delete, Get, Post, Put } from '../../shared/decorators/http/http-method.decorator'
+import { Body, Params } from '../../shared/decorators/http/request-properties.decorator'
+import { Apartment } from '../../shared/models'
+import { MongoId } from '../../shared/types'
 import { ApartmentService } from './service'
 
 @Controller('/apartment')
@@ -8,32 +11,32 @@ export class ApartmentController {
   private readonly service = new ApartmentService()
 
   @Post('/')
-  async create (req: Request): Promise<any> {
-    const apartment = req.body
+  @Auth()
+  async create (@Body() apartment: Apartment): Promise<any> {
     return await this.service.create(apartment)
   }
 
   @Get('/')
+  @Auth()
   async findAll (): Promise<any> {
     return await this.service.findAll()
   }
 
   @Get('/:id')
-  async findById (req: Request): Promise<any> {
-    const { id } = req.params
+  @Auth()
+  async findById (@Params('id') id: MongoId): Promise<any> {
     return await this.service.findById(id)
   }
 
   @Put('/:id')
-  async update (req: Request): Promise<any> {
-    const { id } = req.params
-    const apartment = req.body
+  @Auth()
+  async update (@Params('id') id: MongoId, @Body() apartment: Apartment): Promise<any> {
     return await this.service.update(id, apartment)
   }
 
   @Delete('/:id')
-  async delete (req: Request): Promise<boolean> {
-    const { id } = req.params
+  @Auth()
+  async delete (@Params('id') id: MongoId): Promise<boolean> {
     return await this.service.delete(id)
   }
 }

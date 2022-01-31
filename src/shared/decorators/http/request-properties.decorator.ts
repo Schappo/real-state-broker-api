@@ -14,7 +14,7 @@ const functionArgumentDecoratorFactory = (decoratorName: string) => {
   }
 }
 
-export const handlerArgDecorators = (target: object, propertyKey: string, descriptor: PropertyDescriptor) => {
+export const handleArgDecorators = (target: object, propertyKey: string, descriptor: PropertyDescriptor) => {
   const method = descriptor.value || null
   descriptor.value = function (...args: object[]) {
     const [req, resp] = args as [Request, Response]

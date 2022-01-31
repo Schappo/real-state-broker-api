@@ -4,16 +4,12 @@ import { compareHash } from '../../shared/encryption.functions'
 import jwt from 'jsonwebtoken'
 import { RedisService } from '../../shared/redis/redis.service'
 
-export type UserLogin = {
-  accessToken: string
-}
-
 export class AuthenticationService {
   private readonly userService = new UserService()
   private readonly redisService = new RedisService()
   private readonly SECRET = process.env.SECRET
 
-  async login (username: string, password: string): Promise<UserLogin> {
+  async login (username: string, password: string): Promise<{accessToken: string}> {
     const user = await this.userService.findOne({ username })
 
     if (!user) throw new ApiError('User Not Found!', 400)

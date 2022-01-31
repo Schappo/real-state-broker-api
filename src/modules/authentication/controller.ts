@@ -1,4 +1,3 @@
-import { Request } from 'express'
 import { UserLogin } from 'src/shared/types'
 import Auth from '../../shared/decorators/authentication.decrator'
 import Controller from '../../shared/decorators/http/controller.decorator'
@@ -19,7 +18,6 @@ export class AuthenticationController {
   @Post('/logout')
   @Auth()
   async logout (@Headers('authorization') accessToken: string): Promise<string> {
-    console.log(accessToken)
     return await this.service.logout(accessToken)
   }
 }
