@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import express, { Application, Express, Request, Response } from 'express'
-import { connect } from 'mongoose'
 import { controllers } from './modules/controllers'
 import { RouteDefinition } from './shared/decorators/http/http-method.decorator'
 import { MetadataKeysEnum } from './shared/enums'
@@ -15,23 +14,8 @@ class App {
 
   constructor () {
     this._instance = express()
-    this.databaseStart()
     this._instance.use(express.json())
     this.registerRouters()
-  }
-
-  async databaseStart () {
-    const { BD_URL } = process.env
-    try {
-      await connect(
-        BD_URL, (err) => {
-          if (err) throw err
-          console.log('Mongo Started!')
-        }
-      )
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   private registerRouters () {

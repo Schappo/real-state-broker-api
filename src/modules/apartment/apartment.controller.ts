@@ -30,7 +30,7 @@ export class ApartmentController {
 
   @Put('/:id')
   @Auth()
-  async update (@Params('id') id: MongoId, @Body() apartment: Apartment): Promise<Apartment> {
+  async do (@Params('id') id: MongoId, @Body() apartment: Apartment): Promise<Apartment> {
     return await this.apartmentService.update(id, apartment)
   }
 

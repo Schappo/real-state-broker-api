@@ -38,7 +38,6 @@ export class ApartmentService {
 
   async update (id: MongoId, newApartment: Apartment): Promise<Apartment> {
     await this.findById(id)
-
     return await this.apartmentRepository.update(id, newApartment)
   }
 }
