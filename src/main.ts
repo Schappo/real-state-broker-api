@@ -20,10 +20,10 @@ async function databaseStart () {
 
 const bootstrap = async (): Promise<void> => {
   try {
-    await databaseStart()
     app.listen(
       PORT, () => console.log(`App linstening on port ${PORT}`)
     )
+    await databaseStart()
   } catch (error) {
     console.error(error)
   }
