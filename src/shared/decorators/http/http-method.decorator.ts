@@ -21,7 +21,6 @@ const methodDecoratorFactory = (method: MethodsEnum) => {
         Reflect.defineMetadata('routes', [], target.constructor)
       }
       const routes = Reflect.getMetadata('routes', target.constructor) as Array<RouteDefinition>
-      console.log(method, path, propertyKey)
       routes.push({
         requestMethod: method,
         path,
